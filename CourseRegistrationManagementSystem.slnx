@@ -1,0 +1,6 @@
+<Solution>
+  <Project Path="CourseRegistration.BusinessLogic/CourseRegistration.BusinessLogic.csproj" Id="a08f610e-442c-423f-b0c0-8e134aa55051" />
+  <Project Path="CourseRegistration.DataAccess/CourseRegistration.DataAccess.csproj" Id="ab68b301-c0b3-4c38-a336-bd794084806e" />
+  <Project Path="CourseRegistration.Models/CourseRegistration.Models.csproj" Id="abbe3a5a-29ef-4dd9-b255-5ade1093234c" />
+  <Project Path="CourseRegistrationManagementSystem/CourseRegistrationManagementSystem.csproj" />
+</Solution>
