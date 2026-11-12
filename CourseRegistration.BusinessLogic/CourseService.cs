@@ -20,9 +20,10 @@ namespace CourseRegistration.BusinessLogic
 
         public bool Add(Course course)
         {
+            if (course == null) throw new ArgumentNullException(nameof(course));
+
             bool isCourseCodeValid = Regex.IsMatch(course.CourseCode, @"^[A-Z]{2}[0-9]{3}$");
 
-            if (course == null) throw new ArgumentNullException(nameof(course));
             if (!isCourseCodeValid) throw new ArgumentException("Course code format must be 2 uppercase letters followed by 3 digits.");
             if (course.CourseName == null) throw new ArgumentException("Course name cannot be null.");
             if (course.CreditHours < 0 || course.CreditHours > 15) throw new ArgumentException("Credit Hours must be between 0 and 15.");
