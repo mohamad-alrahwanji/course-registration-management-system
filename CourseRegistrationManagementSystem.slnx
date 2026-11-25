@@ -1,6 +1,7 @@
 <Solution>
-  <Project Path="CourseRegistration.BusinessLogic/CourseRegistration.BusinessLogic.csproj" Id="a08f610e-442c-423f-b0c0-8e134aa55051" />
-  <Project Path="CourseRegistration.DataAccess/CourseRegistration.DataAccess.csproj" Id="ab68b301-c0b3-4c38-a336-bd794084806e" />
-  <Project Path="CourseRegistration.Models/CourseRegistration.Models.csproj" Id="abbe3a5a-29ef-4dd9-b255-5ade1093234c" />
-  <Project Path="CourseRegistrationManagementSystem/CourseRegistrationManagementSystem.csproj" />
+  <Project Path="CourseRegistration.BL/CourseRegistration.BL.csproj" />
+  <Project Path="CourseRegistration.DAL/CourseRegistration.DAL.csproj" />
+  <Project Path="CourseRegistration.Entities/CourseRegistration.Entities.csproj" />
+  <Project Path="CourseRegistration.Window/CourseRegistration.Window.csproj" />
+  <Project Path="Framework.Common/Framework.Common.csproj" Id="59038b07-3966-4dd8-8be7-2147f5f3358e" />
 </Solution>

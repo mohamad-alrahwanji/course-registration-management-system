@@ -1,0 +1,95 @@
+﻿using CourseRegistration.DAL.Repositories;
+using CourseRegistration.Entities;
+using Microsoft.AspNetCore.Identity;
+
+namespace CourseRegistration.BL.Managers
+{
+    internal class UserManager
+    {
+        private readonly UserRepository _userRepository;
+        private readonly PasswordHasher<User> _passwordHasher = new();
+
+        internal UserManager()
+        {
+            _userRepository = new UserRepository();
+        }
+
+        internal List<User> GetAll()
+        {
+            return _userRepository.GetAll();
+        }
+
+        internal bool Add(User user, string password)
+        {
+            if(string.IsNullOrWhiteSpace(user.Username)) throw new ArgumentException("Username cannot be empty.");
+            if (user.Username.Length > 50) throw new ArgumentException("Username cannot exceed 50 characters.");
+            if (string.IsNullOrWhiteSpace(user.FullName)) throw new ArgumentException("Full Name cannot be empty."); ;
+            if (user.FullName.Length > 100) throw new ArgumentException("Full name cannot exceed 100 characters.");
+            if (UsernameExists(user.Username)) throw new ArgumentException("Username already exists.");
+            if (string.IsNullOrWhiteSpace(password)) throw new ArgumentException("Password is required.");
+            if (password.Length < 8) throw new ArgumentException("Password must be at least 8 characters.");
+
+            user.PasswordHash = _passwordHasher.HashPassword(user, password);
+
+            return _userRepository.Add(user);
+        }
+
+        internal bool UsernameExists(string username)
+        {
+            return _userRepository.UsernameExists(username);
+        }
+
+        internal bool Edit(User user, string newPassword)
+        {
+
+            if (string.IsNullOrWhiteSpace(user.Username)) throw new ArgumentException("Username cannot be empty.");
+            if (user.Username.Length > 50) throw new ArgumentException("Username cannot exceed 50 characters.");
+            if (user.Role != "Student" && user.Role != "Administrator") throw new ArgumentException("Invalid role selected.");
+            if (string.IsNullOrWhiteSpace(user.FullName)) throw new ArgumentException("Full Name cannot be empty."); ;
+            if (user.FullName.Length > 100) throw new ArgumentException("Full name cannot exceed 100 characters.");
+            if (_userRepository.UsernameExists(user.Username, user.Id)) throw new ArgumentException("Username already exists.");
+
+            bool changePassword = !string.IsNullOrWhiteSpace(newPassword);
+
+            if (changePassword)
+            {
+                if (newPassword.Length < 8) throw new ArgumentException("New password must be at least 8 characters.");
+
+                user.PasswordHash = _passwordHasher.HashPassword(user, newPassword);
+            }
+
+            return _userRepository.Edit(user, changePassword);
+
+        }
+
+        internal bool Delete(User user)
+        {
+            return _userRepository.Delete(user.Id);
+        }
+
+        internal List<User> Search(string searchText)
+        {
+            if (string.IsNullOrWhiteSpace(searchText)) return GetAll();
+            return _userRepository.Search(searchText.Trim());
+        }
+
+        internal User Login(string username, string password)
+        {
+            if (string.IsNullOrWhiteSpace(username) || string.IsNullOrWhiteSpace(password))
+                throw new ArgumentException("Username and Password are required.");
+
+            User? user = _userRepository.GetByUsername(username);
+
+            if (user == null) throw new ArgumentException("Invalid username or password.");
+
+            if (user.IsActive == false) throw new ArgumentException("This account is inactive.");
+
+            PasswordVerificationResult result = _passwordHasher.VerifyHashedPassword(user, user.PasswordHash, password);
+
+            if (result == PasswordVerificationResult.Failed) throw new ArgumentException("Invalid username or password.");
+
+            return user;
+        }
+
+    }
+}
