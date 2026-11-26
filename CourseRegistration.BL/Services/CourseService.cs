@@ -5,14 +5,16 @@ namespace CourseRegistration.BL.Services
 {
     public static class CourseService
     {
-        public static List<Course> GetAll() => new CourseManager().GetAll();
+        private readonly static CourseManager _manager = new CourseManager();
 
-        public static bool Add(Course course) => new CourseManager().Add(course);
+        public static List<Course> GetAll() => _manager.GetAll();
 
-        public static bool Delete(Course course) => new CourseManager().Delete(course);
+        public static bool Add(Course course) => _manager.Add(course);
 
-        public static bool Edit(Course course) => new CourseManager().Edit(course);
+        public static bool Delete(Course course) => _manager.Delete(course);
 
-        public static List<Course> Search(string searchText) => new CourseManager().Search(searchText);
+        public static bool Edit(Course course) => _manager.Edit(course);
+
+        public static List<Course> Search(string searchText) => _manager.Search(searchText);
     }
 }

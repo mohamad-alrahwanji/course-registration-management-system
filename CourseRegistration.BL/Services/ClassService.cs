@@ -5,23 +5,25 @@ namespace CourseRegistration.BL.Services
 {
     public static class ClassService
     {
-        public static List<Class> GetAll() => new ClassManager().GetAll();
+        private readonly static ClassManager _manager = new ClassManager();
 
-        public static bool Add(Class courseClass) => new ClassManager().Add(courseClass);
+        public static List<Class> GetAll() => _manager.GetAll();
 
-        public static bool Delete(Class courseClass) => new ClassManager().Delete(courseClass);
+        public static bool Add(Class courseClass) => _manager.Add(courseClass);
 
-        public static bool Edit(Class courseClass) => new ClassManager().Edit(courseClass);
+        public static bool Delete(Class courseClass) => _manager.Delete(courseClass);
 
-        public static List<Class> Search(string searchText) => new ClassManager().Search(searchText);
+        public static bool Edit(Class courseClass) => _manager.Edit(courseClass);
 
-        public static List<Class> GetActive() => new ClassManager().GetActive();
+        public static List<Class> Search(string searchText) => _manager.Search(searchText);
 
-        public static bool IsAvailable(int classId) => new ClassManager().IsAvailable(classId);
+        public static List<Class> GetActive() => _manager.GetActive();
 
-        public static List<Class> SearchActive(string searchText) => new ClassManager().SearchActive(searchText);
+        public static bool IsAvailable(int classId) => _manager.IsAvailable(classId);
 
-        public static List<Class> GetByCourseId(int courseId) => new ClassManager().GetByCourseId(courseId);
+        public static List<Class> SearchActive(string searchText) => _manager.SearchActive(searchText);
+
+        public static List<Class> GetByCourseId(int courseId) => _manager.GetByCourseId(courseId);
 
     }
 }

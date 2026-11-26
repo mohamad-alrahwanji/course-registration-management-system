@@ -5,14 +5,16 @@ namespace CourseRegistration.BL.Services
 {
     public static class RegistrationService
     {
-        public static bool Add(Registration registration) => new RegistrationManager().Add(registration);
+        private readonly static RegistrationManager _manager = new RegistrationManager();
 
-        public static List<Registration> GetByStudentId(int studentId) => new RegistrationManager().GetByStudentId(studentId);
+        public static bool Add(Registration registration) => _manager.Add(registration);
 
-        public static bool Cancel(int registrationId) => new RegistrationManager().Cancel(registrationId);
+        public static List<Registration> GetByStudentId(int studentId) => _manager.GetByStudentId(studentId);
 
-        public static List<Registration> GetActiveByStudentId(int studentId) => new RegistrationManager().GetActiveByStudentId(studentId);
+        public static bool Cancel(int registrationId) => _manager.Cancel(registrationId);
 
-        public static List<RegistrationReport> GetByClassId(int classId) => new RegistrationManager().GetByClassId(classId);
+        public static List<Registration> GetActiveByStudentId(int studentId) => _manager.GetActiveByStudentId(studentId);
+
+        public static List<RegistrationReport> GetByClassId(int classId) => _manager.GetByClassId(classId);
     }
 }
